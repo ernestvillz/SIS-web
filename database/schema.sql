@@ -1,0 +1,54 @@
+CREATE TABLE IF NOT EXISTS admins (
+ id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ username VARCHAR(80) NOT NULL UNIQUE,
+ password_hash VARCHAR(255) NOT NULL,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS departments (
+ id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ department_name VARCHAR(150) NOT NULL UNIQUE,
+ description VARCHAR(500) NULL,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS courses (
+ id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ department_id INT UNSIGNED NOT NULL,
+ course_code VARCHAR(30) NOT NULL UNIQUE,
+ course_name VARCHAR(180) NOT NULL,
+ description VARCHAR(500) NULL,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ CONSTRAINT fk_courses_department FOREIGN KEY (department_id) REFERENCES departments(id) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS students (
+ id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ student_number VARCHAR(40) NOT NULL UNIQUE,
+ first_name VARCHAR(100) NOT NULL,
+ middle_name VARCHAR(100) NULL,
+ last_name VARCHAR(100) NOT NULL,
+ gender VARCHAR(30) NULL,
+ date_of_birth DATE NULL,
+ contact_number VARCHAR(40) NULL,
+ email VARCHAR(190) NULL,
+ present_address VARCHAR(500) NULL,
+ permanent_address VARCHAR(500) NULL,
+ status ENUM('Active','Inactive','Graduated','Dropped') NOT NULL DEFAULT 'Active',
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS student_academics (
+ id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ student_id INT UNSIGNED NOT NULL,
+ course_id INT UNSIGNED NOT NULL,
+ academic_year VARCHAR(20) NOT NULL,
+ year_level VARCHAR(40) NOT NULL,
+ semester VARCHAR(40) NOT NULL,
+ enrollment_status ENUM('Enrolled','Completed','Withdrawn','Failed') NOT NULL DEFAULT 'Enrolled',
+ end_status ENUM('Ongoing','Completed','Withdrawn','Failed') NOT NULL DEFAULT 'Ongoing',
+ remarks VARCHAR(500) NULL,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ CONSTRAINT fk_academic_student FOREIGN KEY (student_id) REFERENCES students(id) ON UPDATE CASCADE ON DELETE CASCADE,
+ CONSTRAINT fk_academic_course FOREIGN KEY (course_id) REFERENCES courses(id) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

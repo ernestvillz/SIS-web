@@ -1,0 +1,3 @@
+<?php require_once __DIR__ . '/bootstrap.php'; ?>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title><?= e($page_title ?? 'Student Information System') ?></title><link rel="stylesheet" href="assets/style.css"></head><body>
+<header><strong>Student Information System</strong><?php if (!empty($_SESSION['admin_id'])): ?><nav><a href="index.php">Dashboard</a><a href="departments.php">Departments</a><a href="courses.php">Courses</a><a href="students.php">Students</a><a href="academics.php">Academic History</a><a href="logout.php">Logout</a></nav><?php endif; ?></header><main><?php show_flash(); ?>
