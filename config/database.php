@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 // Replace these placeholders with the exact credentials from your hosting control panel.
-const DB_HOST = 'YOUR_DATABASE_HOST';
-const DB_NAME = 'YOUR_DATABASE_NAME';
-const DB_USER = 'YOUR_DATABASE_USERNAME';
-const DB_PASS = 'YOUR_DATABASE_PASSWORD';
+const DB_HOST = 'sql209.infinityfree.com';
+const DB_NAME = 'if0_43284159_sis_database';
+const DB_USER = 'if0_43284159';
+const DB_PASS = 'qCMed3Z4pLV';
 
 function db(): PDO {
     static $pdo = null;
